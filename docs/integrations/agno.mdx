@@ -1,0 +1,207 @@
+---
+title: Agno
+description: "Add persistent multimodal memory to Agno-based agents using Deja Vu for text and image interactions."
+---
+
+This integration of [**Deja Vu**](https://github.com/dejavu-memory/dejavu) with [Agno](https://github.com/agno-agi/agno) enables persistent, multimodal memory for Agno-based agents - improving personalization, context awareness, and continuity across conversations.
+
+## Overview
+
+1. Store and retrieve memories from Deja Vu within Agno agents
+2. Support for multimodal interactions (text and images)
+3. Semantic search for relevant past conversations
+4. Personalized responses based on user history
+5. One-line memory integration via `Deja VuTools`
+
+## Prerequisites
+
+Before setting up Deja Vu with Agno, ensure you have:
+
+1. Installed the required packages:
+```bash
+pip install agno dejavu-memory python-dotenv
+```
+
+2. Valid API keys:
+   - <a href="https://app.dejavu.ai/dashboard/api-keys?utm_source=oss&utm_medium=integration-agno" rel="nofollow">Deja Vu API Key</a>
+   - OpenAI API Key (for the agent model)
+
+## Quick Integration (Using `Deja VuTools`)
+
+The simplest way to integrate Deja Vu with Agno Agents is to use Deja Vu as a tool using built-in `Deja VuTools`:
+
+```python
+from agno.agent import Agent
+from agno.models.openai import OpenAIChat
+from agno.tools.dejavu import Deja VuTools
+
+agent = Agent(
+    name="Memory Agent",
+    model=OpenAIChat(id="gpt-5-mini"),
+    tools=[Deja VuTools()],
+    description="An assistant that remembers and personalizes using Deja Vu memory."
+)
+```
+
+This enables memory functionality out of the box:
+
+- **Persistent memory writing**: `Deja VuTools` uses `MemoryClient.add(...)` to store messages from user-agent interactions, including optional metadata such as user ID or session.
+- **Contextual memory search**: Compatible queries use `MemoryClient.search(...)` to retrieve relevant past messages, improving contextual understanding.
+- **Multimodal support**: Both text and image inputs are supported, allowing richer memory records.
+
+> `Deja VuTools` uses the `MemoryClient` under the hood and requires no additional setup. You can customize its behavior by modifying your tools list or extending it in code.
+
+## Full Manual Example
+
+> Note: Deja Vu can also be used with Agno Agents as a separate memory layer.
+
+The following example demonstrates how to create an Agno agent with Deja Vu memory integration, including support for image processing:
+
+```python
+import base64
+from pathlib import Path
+from typing import Optional
+
+from agno.agent import Agent
+from agno.media import Image
+from agno.models.openai import OpenAIChat
+from dejavu import MemoryClient
+
+# Initialize the Deja Vu client
+client = MemoryClient()
+
+# Define the agent
+agent = Agent(
+    name="Personal Agent",
+    model=OpenAIChat(id="gpt-4"),
+    description="You are a helpful personal agent that helps me with day to day activities."
+                "You can process both text and images.",
+    markdown=True
+)
+
+
+def chat_user(
+    user_input: Optional[str] = None,
+    user_id: str = "alex",
+    image_path: Optional[str] = None
+) -> str:
+    """
+    Handle user input with memory integration, supporting both text and images.
+
+    Args:
+        user_input: The user's text input
+        user_id: Unique identifier for the user
+        image_path: Path to an image file if provided
+
+    Returns:
+        The agent's response as a string
+    """
+    if image_path:
+        # Convert image to base64
+        with open(image_path, "rb") as image_file:
+            base64_image = base64.b64encode(image_file.read()).decode("utf-8")
+
+        # Create message objects for text and image
+        messages = []
+
+        if user_input:
+            messages.append({
+                "role": "user",
+                "content": user_input
+            })
+
+        messages.append({
+            "role": "user",
+            "content": {
+                "type": "image_url",
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{base64_image}"
+                }
+            }
+        })
+
+        # Store messages in memory
+        client.add(messages, user_id=user_id)
+        print("✅ Image and text stored in memory.")
+
+    if user_input:
+        # Search for relevant memories
+        memories = client.search(user_input, filters={"user_id": user_id})
+        memory_context = "\n".join(f"- {m['memory']}" for m in memories['results'])
+
+        # Construct the prompt
+        prompt = f"""
+You are a helpful personal assistant who helps users with their day-to-day activities and keeps track of everything.
+
+Your task is to:
+1. Analyze the given image (if present) and extract meaningful details to answer the user's question.
+2. Use your past memory of the user to personalize your answer.
+3. Combine the image content and memory to generate a helpful, context-aware response.
+
+Here is what I remember about the user:
+{memory_context}
+
+User question:
+{user_input}
+"""
+        # Get response from agent
+        if image_path:
+            response = agent.run(prompt, images=[Image(filepath=Path(image_path))])
+        else:
+            response = agent.run(prompt)
+
+        # Store the interaction in memory
+        interaction_message = [{"role": "user", "content": f"User: {user_input}\nAssistant: {response.content}"}]
+        client.add(interaction_message, user_id=user_id)
+        return response.content
+
+    return "No user input or image provided."
+
+
+# Example Usage
+if __name__ == "__main__":
+    response = chat_user(
+        "I like to travel and my favorite destination is London",
+        image_path="travel_items.jpeg",
+        user_id="alex"
+    )
+    print(response)
+```
+
+## Key Features
+
+### 1. Multimodal Memory Storage
+
+The integration supports storing both text and image data:
+
+- **Text Storage**: Conversation history is saved in a structured format
+- **Image Analysis**: Agents can analyze images and store visual information
+- **Combined Context**: Memory retrieval combines both text and visual data
+
+### 2. Personalized Agent Responses
+
+Improve your agent's context awareness:
+
+- **Memory Retrieval**: Semantic search finds relevant past interactions
+- **User Preferences**: Personalize responses based on stored user information
+- **Continuity**: Maintain conversation threads across multiple sessions
+
+### 3. Flexible Configuration
+
+Customize the integration to your needs:
+
+- **Use `Deja VuTools()`** for drop-in memory support
+- **Use `MemoryClient` directly** for advanced control
+- **User Identification**: Organize memories by user ID
+- **Memory Search**: Configure search relevance and result count
+- **Memory Formatting**: Support for various OpenAI message formats
+
+<CardGroup cols={2}>
+  <Card title="OpenAI Agents SDK" icon="cube" href="/integrations/openai-agents-sdk">
+    Build agents with OpenAI SDK and Deja Vu
+  </Card>
+  <Card title="Mastra Integration" icon="star" href="/integrations/mastra">
+    Create intelligent agents with Mastra framework
+  </Card>
+</CardGroup>
+

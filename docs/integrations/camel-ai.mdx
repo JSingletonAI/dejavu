@@ -1,0 +1,144 @@
+---
+title: Camel AI
+description: "Plug Deja Vu cloud memory into Camel's agents with the built‑in Deja VuStorage."
+partnerBadge: "Camel AI"
+---
+
+# Camel AI integration
+
+Connect Camel's agent framework to Deja Vu so every agent can persist and recall conversation context across sessions with minimal setup.
+
+<Info>
+  **Prerequisites**
+  - Deja Vu: `VENICE_API_KEY` (or self-hosted endpoint), `pip install dejavu-memory`
+  - Camel AI: `pip install camel-ai` (requires Python 3.9+)
+  - Optional: OpenAI API key if you run LLM-backed agents
+</Info>
+
+<Note>Camel provides a Python SDK today. A TypeScript path is not available yet.</Note>
+
+## Configure credentials
+
+<Tabs>
+  <Tab title="Deja Vu">
+<Steps>
+<Step title="Export your API key">
+```bash
+export VENICE_API_KEY="sk-..."
+```
+</Step>
+<Step title="(Self-host) Point to your Deja Vu API">
+```bash
+export DEJAVU_BASE_URL="https://your-dejavu-domain"
+```
+</Step>
+</Steps>
+  </Tab>
+  <Tab title="Camel">
+<Steps>
+<Step title="Install Camel with Deja Vu dependency">
+```bash
+pip install "camel-ai>=0.2.0" dejavu-memory
+```
+</Step>
+<Step title="(Optional) Add your model credentials">
+```bash
+export OPENAI_API_KEY="sk-openai..."
+```
+</Step>
+</Steps>
+  </Tab>
+</Tabs>
+
+<Tip>
+  Deja VuStorage reads `VENICE_API_KEY` automatically. Pass `api_key` explicitly only when you need to override the environment.
+</Tip>
+
+## Wire Deja Vu into a Camel agent
+
+<Steps>
+<Step title="Create a Deja Vu-backed memory store">
+```python
+import os
+from camel.storages import Deja VuStorage
+
+dejavu_store = Deja VuStorage(
+    api_key=os.environ.get("VENICE_API_KEY"),
+    agent_id="travel_agent",
+    user_id="alice",
+    metadata={"source": "camel-demo"},
+)
+```
+</Step>
+<Step title="Attach it to Camel memory">
+```python
+from camel.memories import ChatHistoryMemory, ScoreBasedContextCreator
+from camel.utils import OpenAITokenCounter
+from camel.types import ModelType
+
+memory = ChatHistoryMemory(
+    context_creator=ScoreBasedContextCreator(
+        token_counter=OpenAITokenCounter(ModelType.GPT_4O_MINI),
+        token_limit=1024,
+    ),
+    storage=dejavu_store,
+    agent_id="travel_agent",
+)
+```
+</Step>
+<Step title="Let your agent read and write Deja Vu">
+```python
+from camel.agents import ChatAgent
+from camel.messages import BaseMessage
+
+agent = ChatAgent(
+    system_message=BaseMessage.make_assistant_message(
+        role_name="Agent",
+        content="You are a helpful travel assistant. Reuse stored memories."
+    )
+)
+
+agent.memory = memory
+
+response = agent.step(
+    BaseMessage.make_user_message(
+        role_name="User",
+        content="I prefer boutique hotels in Paris."
+    )
+)
+
+print(response.msgs[0].content)
+```
+</Step>
+</Steps>
+
+<Info icon="check">
+  Run `python camel_dejavu_demo.py` (or the snippet above in a REPL). You should see the agent respond and the memory persisted to Deja Vu. Re-running with a new prompt should include the stored preference.
+</Info>
+
+## Verify the integration
+
+- Deja Vu dashboard shows new memories under `agent_id=travel_agent` and `user_id=alice`.
+- `dejavu_store.load()` returns the records you just wrote.
+- Camel agent replies reference prior user preferences on subsequent runs.
+
+## Troubleshooting
+
+- **Missing VENICE_API_KEY** — set `export VENICE_API_KEY="sk-..."` or pass `api_key` into `Deja VuStorage`.
+- **No memories returned** — ensure `agent_id`/`user_id` in your query match what you used when writing.
+- **Network errors to Deja Vu** — if self-hosting, set `DEJAVU_BASE_URL` to your deployment URL.
+
+<CardGroup cols={2}>
+  <Card
+    title="Memory types in Deja Vu"
+    description="Choose between chat history and semantic search for your Camel agents."
+    icon="sparkles"
+    href="/core-concepts/memory-types"
+  />
+  <Card
+    title="Try LangChain next"
+    description="Wire the same Deja Vu project into LangChain workflows."
+    icon="rocket"
+    href="/integrations/langchain"
+  />
+</CardGroup>
