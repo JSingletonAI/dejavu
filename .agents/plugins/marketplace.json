@@ -1,0 +1,20 @@
+{
+  "name": "dejavu-plugins",
+  "interface": {
+    "displayName": "Deja Vu Plugins"
+  },
+  "plugins": [
+    {
+      "name": "dejavu",
+      "source": {
+        "source": "local",
+        "path": "./dejavu-plugin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
