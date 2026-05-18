@@ -1,0 +1,55 @@
+name: Bug Report
+description: Report a bug in dejavu
+labels: ["bug"]
+
+body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which part of dejavu is affected?
+      options:
+        - Core / Python SDK
+        - TypeScript SDK
+        - Vector Store (Qdrant, PGVector, Redis, Chroma, etc.)
+        - Graph Memory (Neo4j, Memgraph, etc.)
+        - Ollama / Local Models
+        - OpenClaw
+        - REST API
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      value: |
+        ### Summary
+
+        A clear summary of the bug.
+
+        ### Steps to Reproduce
+
+        ```python
+        from dejavu import Memory
+
+        m = Memory()
+        # Your code here...
+        ```
+
+        ### Expected Behavior
+
+        What you expected to happen.
+
+        ### Actual Behavior
+
+        What actually happened. Paste the full error traceback if applicable.
+
+        ### Environment
+
+        - dejavu version:
+        - Python/Node version:
+        - OS:
+    validations:
+      required: true
