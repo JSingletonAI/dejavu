@@ -1,0 +1,68 @@
+{
+  "name": "@dejavu/openclaw-dejavu",
+  "version": "1.0.11",
+  "type": "module",
+  "description": "Deja Vu memory backend for OpenClaw — platform or self-hosted open-source",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dejavu-memory/dejavu",
+    "directory": "openclaw"
+  },
+  "keywords": [
+    "openclaw",
+    "plugin",
+    "memory",
+    "dejavu",
+    "long-term-memory"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "openclaw.plugin.json",
+    "skills"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "0.34.47",
+    "dejavu-memory": "3.0.2"
+  },
+  "openclaw": {
+    "extensions": [
+      "./dist/index.js"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.4.24",
+      "minGatewayVersion": ">=2026.4.24"
+    },
+    "build": {
+      "openclawVersion": "2026.4.24",
+      "pluginSdkVersion": "2026.4.24"
+    },
+    "install": {
+      "npmSpec": "@dejavu/openclaw-dejavu"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "@vitest/coverage-v8": "^4.0.18",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vitest": "^4.0.18"
+  },
+  "pnpm": {
+    "overrides": {
+      "protobufjs@<7.5.5": "^7.5.5"
+    }
+  }
+}
