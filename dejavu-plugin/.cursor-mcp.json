@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "dejavu": {
+      "url": "https://mcp.dejavu.ai/mcp/",
+      "headers": {
+        "Authorization": "Token ${env:VENICE_API_KEY}"
+      }
+    }
+  }
+}

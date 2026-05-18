@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "dejavu": {
+      "url": "https://mcp.dejavu.ai/mcp",
+      "bearer_token_env_var": "VENICE_API_KEY"
+    }
+  }
+}

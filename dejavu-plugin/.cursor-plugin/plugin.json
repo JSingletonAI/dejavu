@@ -1,0 +1,17 @@
+{
+  "name": "dejavu",
+  "version": "0.1.1",
+  "description": "Deja Vu memory layer for AI applications. Add persistent memory, personalization, and semantic search using the Deja Vu Platform MCP server.",
+  "author": {
+    "name": "Deja Vu",
+    "email": "support@dejavu.ai"
+  },
+  "homepage": "https://dejavu.ai",
+  "repository": "https://github.com/dejavu-memory/dejavu",
+  "logo": "logo.svg",
+  "license": "Apache-2.0",
+  "keywords": ["dejavu", "memory", "mcp", "personalization", "semantic-search"],
+  "skills": "./skills/",
+  "hooks": "./hooks/cursor-hooks.json",
+  "mcpServers": ".cursor-mcp.json"
+}
