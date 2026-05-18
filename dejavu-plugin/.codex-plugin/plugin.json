@@ -1,0 +1,35 @@
+{
+  "name": "dejavu",
+  "version": "0.1.1",
+  "description": "Deja Vu memory layer for AI applications. Add persistent memory, personalization, and semantic search to Codex workflows using the Deja Vu Platform MCP server.",
+  "author": {
+    "name": "Deja Vu",
+    "email": "support@dejavu.ai"
+  },
+  "homepage": "https://dejavu.ai",
+  "repository": "https://github.com/dejavu-memory/dejavu",
+  "license": "Apache-2.0",
+  "skills": "./skills/",
+  "mcpServers": "./.codex-mcp.json",
+  "interface": {
+    "displayName": "Deja Vu",
+    "shortDescription": "Persistent memory layer for AI coding workflows",
+    "longDescription": "Deja Vu adds long-term memory to Codex. Store decisions, user preferences, project context, and session state across conversations. Memories are automatically retrieved via semantic search so Codex always has the right context.",
+    "developerName": "Deja Vu",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://dejavu.ai",
+    "privacyPolicyURL": "https://dejavu.ai/privacy",
+    "termsOfServiceURL": "https://dejavu.ai/terms",
+    "defaultPrompt": [
+      "Search my memories for recent project decisions",
+      "Remember that I prefer TypeScript over JavaScript",
+      "What do you know about my coding preferences?"
+    ],
+    "brandColor": "#FBBF24",
+    "logo": "./logo.svg"
+  }
+}
