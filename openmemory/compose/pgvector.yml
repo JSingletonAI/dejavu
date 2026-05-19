@@ -1,0 +1,12 @@
+services:
+  dejavu_store:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=dejavu
+      - POSTGRES_USER=dejavu
+      - POSTGRES_PASSWORD=dejavu
+    ports:
+      - "5432:5432"
+    volumes:
+      - dejavu_storage:/var/lib/postgresql/data

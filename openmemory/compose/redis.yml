@@ -1,0 +1,13 @@
+services:
+  dejavu_store:
+    image: redis/redis-stack-server:latest
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - dejavu_storage:/var/lib/redis-stack
+    command: >
+      redis-stack-server
+      --appendonly yes
+      --appendfsync everysec
+      --save 900 1 300 10 60 10000
