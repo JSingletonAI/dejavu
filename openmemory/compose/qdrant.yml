@@ -1,0 +1,8 @@
+services:
+  dejavu_store:
+    image: qdrant/qdrant:latest
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+    volumes:
+      - dejavu_storage:/dejavu/storage
