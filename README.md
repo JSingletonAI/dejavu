@@ -110,6 +110,7 @@ Deja Vu writes everything to `~/.dejavu/`:
 ```
 
 The repo itself:
+
 <img width="538" height="798" alt="image" src="https://github.com/user-attachments/assets/1658bf57-20a0-4560-bf48-dc4338666b25" />
 
 ```
