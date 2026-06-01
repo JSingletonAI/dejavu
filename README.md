@@ -123,8 +123,9 @@ tests/            ← SDK and interface tests
 
 ## Background
 
-The goal is to make AI memory feel boring and dependable: easy to run, easy to inspect, and easy to move between tools. The design follows the white paper's long-term memory direction while keeping the first public version focused on the parts people can actually use right away.
+Memory is the missing layer of the AI stack. Models get smarter every month and forget you every session. The few that remember keep your context on their servers, on their terms. Deja Vu builds the layer that should have existed from the start: a personal memory store you own, run locally, and carry into every tool that can talk to it. The long-term goal is a portable memory standard for AI, where your context is infrastructure you control rather than a feature locked inside someone else's product. This first release ships the foundation. Local storage, open interfaces, zero lock-in.
 
 ## Attribution
 
-Deja Vu is based on the open-source work from [`mem0ai/mem0`](https://github.com/mem0ai/mem0) and is licensed under Apache-2.0.
+Deja Vu builds on the open-source work of [`mem0ai/mem0`](https://github.com/mem0ai/mem0), re-architected around a local-first, privacy-preserving design. Released under Apache-2.0.
+
