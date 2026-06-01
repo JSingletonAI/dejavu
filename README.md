@@ -121,10 +121,6 @@ examples/         ← demo apps and integration samples
 tests/            ← SDK and interface tests
 ```
 
-## Background
-
-Memory is the missing layer of the AI stack. Models get smarter every month and forget you every session. The few that remember keep your context on their servers, on their terms. Deja Vu builds the layer that should have existed from the start: a personal memory store you own, run locally, and carry into every tool that can talk to it. The long-term goal is a portable memory standard for AI, where your context is infrastructure you control rather than a feature locked inside someone else's product. This first release ships the foundation. Local storage, open interfaces, zero lock-in.
-
 ## Attribution
 
 Deja Vu builds on the open-source work of [`mem0ai/mem0`](https://github.com/mem0ai/mem0), re-architected around a local-first, privacy-preserving design. Released under Apache-2.0.
