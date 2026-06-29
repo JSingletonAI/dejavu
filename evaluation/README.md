@@ -190,9 +190,5 @@ If you use this code or dataset in your research, please cite our paper:
 
 ## 👥 Contributors
 
-- [Prateek Chhikara](https://github.com/prateekchhikara)
-- [Dev Khant](https://github.com/Dev-Khant)
-- [Saket Aryan](https://github.com/whysosaket)
-- [Taranjeet Singh](https://github.com/taranjeet)
-- [Deshraj Yadav](https://github.com/deshraj)
+- [JSingletonAI](https://github.com/JSingletonAI)
 

@@ -1,7 +1,7 @@
 ﻿# Deja Vu
 
 [![Website](https://img.shields.io/badge/website-deja--vu.dev-0f172a?style=flat-square)](https://deja-vu.dev)
-[![X](https://img.shields.io/badge/@useDejaVu-0f172a?style=flat-square&logo=x&logoColor=white)](https://x.com/useDejaVu)
+[![GitHub](https://img.shields.io/badge/GitHub-JSingletonAI-0f172a?style=flat-square&logo=github&logoColor=white)](https://github.com/JSingletonAI)
 [![License](https://img.shields.io/badge/license-Apache--2.0-0f172a?style=flat-square)](LICENSE)
 <img width="1983" height="793" alt="GithubImage2" src="https://github.com/user-attachments/assets/831be4fe-7384-428b-8e97-864c22255d84" />
 
@@ -128,6 +128,10 @@ tests/            <- SDK and interface tests
 Memory is the missing layer of the AI stack. Models get smarter every month and forget you every session. The few that remember keep your context on their servers, on their terms. Deja Vu builds the layer that should have existed from the start: a personal memory store you own, run locally, and carry into every tool that can talk to it. The long-term goal is a portable memory standard for AI, where your context is infrastructure you control rather than a feature locked inside someone else's product. This first release ships the foundation. Local storage, open interfaces, zero lock-in.
 
 ![Deja Vu - Memories owned by me](docs/images/dejavu-hero.png)
+
+## Maintainer
+
+- [JSingletonAI](https://github.com/JSingletonAI)
 
 ## Attribution
 
