@@ -1,7 +1,6 @@
 ﻿# Deja Vu
 
 [![Website](https://img.shields.io/badge/website-deja--vu.dev-0f172a?style=flat-square)](https://deja-vu.dev)
-[![GitHub](https://img.shields.io/badge/GitHub-JSingletonAI-0f172a?style=flat-square&logo=github&logoColor=white)](https://github.com/JSingletonAI)
 [![License](https://img.shields.io/badge/license-Apache--2.0-0f172a?style=flat-square)](LICENSE)
 <img width="1983" height="793" alt="GithubImage2" src="https://github.com/user-attachments/assets/831be4fe-7384-428b-8e97-864c22255d84" />
 
